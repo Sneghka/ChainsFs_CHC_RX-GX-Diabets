@@ -4,6 +4,13 @@ D:\Sneghka\IT\Morion\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\Chains
 D:\Sneghka\IT\Morion\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\nunit.framework.xml
 D:\Sneghka\IT\Morion\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.dll
 D:\Sneghka\IT\Morion\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.pdb
+D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\ChainsFs_CHC_RX-GX-Diabets.dll
+D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\ChainsFs_CHC_RX-GX-Diabets.pdb
+D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\nunit.framework.dll
+D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\nunit.framework.xml
+D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.dll
+D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.pdb
+D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.csprojResolveAssemblyReference.cache
 D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\ChainsFs_CHC_RX-GX-Diabets.dll
 D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\ChainsFs_CHC_RX-GX-Diabets.pdb
 D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\nunit.framework.dll
@@ -22,10 +29,3 @@ D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsF
 D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\WebDriver.Support.xml
 D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.dll
 D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.pdb
-D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\ChainsFs_CHC_RX-GX-Diabets.dll
-D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\ChainsFs_CHC_RX-GX-Diabets.pdb
-D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\nunit.framework.dll
-D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\nunit.framework.xml
-D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.dll
-D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.pdb
-D:\Sneghka\IT\Morion\Projects\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.csprojResolveAssemblyReference.cache

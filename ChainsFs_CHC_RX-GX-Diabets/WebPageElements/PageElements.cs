@@ -76,6 +76,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
             get { return _firefox.FindElement(By.XPath("//div[@class='QvFrame Document_CH19']/div[2]/div[2]/div")); }
         }
 
+        /**MARKET NAME**/
         private string[] _marketXPaths =
         {
             "",
@@ -93,79 +94,50 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
         {
             return _firefox.FindElement(By.XPath(_marketXPaths[n]));
         }
-        /**MARKET NAME**/
-        //public IWebElement Market1
-        //{
-        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH19']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
-        //}
-
-        //public IWebElement Market2
-        //{
-        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH24']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
-        //}
-        //public IWebElement Market3
-        //{
-        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH110']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
-        //}
-        //public IWebElement Market4
-        //{
-        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH25']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
-        //}
-        //public IWebElement Market5 //ENTEROGERMINA Market + FS
-        //{
-        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH23']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
-        //}
-        //public IWebElement Market6
-        //{
-        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH26']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
-        //}
-        //public IWebElement Market7
-        //{
-        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH104']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
-        //}
-        //public IWebElement Market8
-        //{
-        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH112']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
-        //}
+      
 
         /**BRAND NAME**/
 
-        public IWebElement Brand1
+        private string[] _brandXPaths =
         {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH19']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
-        }
-        public IWebElement Brand2
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH24']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
-        }
-        public IWebElement Brand3
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH110']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
-        }
-        public IWebElement Brand4
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH25']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
-        }
-        public IWebElement Brand5
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH23']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
-        }
-        public IWebElement Brand6
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH26']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
-        }
-        public IWebElement Brand7
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH104']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
-        }
-        public IWebElement Brand8
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH112']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
-        }
+            "",
+            ".//*[@class='QvFrame Document_CH19']/div[3]/div[1]/div[1]/div[2]/div/div[3]",
+            ".//*[@class='QvFrame Document_CH24']/div[3]/div[1]/div[1]/div[2]/div/div[3]",
+            ".//*[@class='QvFrame Document_CH110']/div[3]/div[1]/div[1]/div[2]/div/div[3]",
+            ".//*[@class='QvFrame Document_CH25']/div[3]/div[1]/div[1]/div[2]/div/div[3]",
+            ".//*[@class='QvFrame Document_CH23']/div[3]/div[1]/div[1]/div[2]/div/div[3]",
+            ".//*[@class='QvFrame Document_CH26']/div[3]/div[1]/div[1]/div[2]/div/div[3]",
+            ".//*[@class='QvFrame Document_CH104']/div[3]/div[1]/div[1]/div[2]/div/div[3]",
+            ".//*[@class='QvFrame Document_CH112']/div[3]/div[1]/div[1]/div[2]/div/div[3]"
+        };
 
+        public IWebElement GetBrand(int n)
+        {
+            return _firefox.FindElement(By.XPath(_brandXPaths[n]));
+        }
+        
 
         /***VALUE**/
-        public IWebElement Value1
+
+        private string[] _valueXPaths =
+        {
+            "",
+            ".//*[@class='QvFrame Document_CH19']/div[3]/div[1]/div[1]/div[5]/div/div[6]",
+            ".//*[@class='QvFrame Document_CH24']/div[3]/div[1]/div[1]/div[5]/div/div[6]",
+            ".//*[@class='QvFrame Document_CH110']/div[3]/div[1]/div[1]/div[5]/div/div[6]",
+            ".//*[@class='QvFrame Document_CH25']/div[3]/div[1]/div[1]/div[5]/div/div[6]",
+            ".//*[@class='QvFrame Document_CH23']/div[3]/div[1]/div[1]/div[5]/div/div[6]",
+            ".//*[@class='QvFrame Document_CH26']/div[3]/div[1]/div[1]/div[5]/div/div[6]",
+            ".//*[@class='QvFrame Document_CH104']/div[3]/div[1]/div[1]/div[5]/div/div[6]",
+            ".//*[@class='QvFrame Document_CH112']/div[3]/div[1]/div[1]/div[5]/div/div[6]"
+        };
+
+        public IWebElement GetValue(int n)
+        {
+            return _firefox.FindElement(By.XPath(_valueXPaths[n]));
+        }
+
+        /*     public IWebElement Value1
         {
             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH19']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
         }
@@ -196,7 +168,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
         public IWebElement Value8
         {
             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH112']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
-        }
+        }*/
 
         /********Page Elements (277)*********/
 

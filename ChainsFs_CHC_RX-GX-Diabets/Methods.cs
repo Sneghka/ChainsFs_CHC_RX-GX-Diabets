@@ -55,8 +55,8 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             var loginElement = pageElements.LoginElement;
             var passwordElement = pageElements.PasswordElement;
             var loginButton = pageElements.LoginButton;
-            loginElement.SendKeys("full_test");
-            passwordElement.SendKeys("aspirin222");
+            loginElement.SendKeys("");
+            passwordElement.SendKeys("");
             loginButton.Click();
             WaitForAjax();
             var continueButton = pageElements.ContinueButton;

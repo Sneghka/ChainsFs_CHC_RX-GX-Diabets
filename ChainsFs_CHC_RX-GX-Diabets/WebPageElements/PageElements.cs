@@ -1,0 +1,299 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+
+namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
+{
+    //Elements for CHC/RX/GX/Diabets pages
+
+    public class PageElements
+    {
+        private readonly FirefoxDriver _firefox;
+
+        public PageElements(FirefoxDriver firefox)
+        {
+            _firefox = firefox;
+
+        }
+
+        //ELEMENTS FOR LOGIN
+        public IWebElement LoginElement
+        {
+            get { return _firefox.FindElement(By.Id("username")); }
+        }
+        public IWebElement PasswordElement
+        {
+            get { return _firefox.FindElement(By.Id("password")); }
+        }
+
+        public IWebElement LoginButton
+        {
+            get { return _firefox.FindElement(By.Id("submit")); }
+        }
+
+        public IWebElement ContinueButton
+        {
+            get { return _firefox.FindElement(By.XPath("//div[@class='QvFrame Document_BU04']/div[2]/button")); }
+        }
+
+        //PAGE ELEMENTS
+        /******PERIOD******/
+        public IWebElement ChoosenPeriod {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[3]/div[1]")); }
+        }
+        public IWebElement ChosePeriodWeekButton
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[1]/div[1]")); }
+        }
+        public IWebElement ChosePeriodMonthButton
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[2]/div[1]")); }
+        }
+        public IWebElement ChosePeriodQrtButton
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[3]/div[1]")); }
+        }
+
+
+        /*********Filters*********/
+        public IWebElement SalesRadioButton
+        {
+            get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB129']/div[3]/div/div[1]/div[1]/div[1]")); }
+        }
+
+        public IWebElement CurrencyToggle
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_BU56']/div[3]/button")); }
+        }
+
+        public IWebElement CheckCurrencyMarket
+        {
+            get { return _firefox.FindElement(By.XPath("//div[@class='QvFrame Document_CH19']/div[2]/div[2]/div")); }
+        }
+
+        private string[] _marketXPaths =
+        {
+            "",
+            ".//*[@class='QvFrame Document_CH19']/div[3]/div[1]/div[1]/div[1]/div/div[1]",
+            ".//*[@class='QvFrame Document_CH24']/div[3]/div[1]/div[1]/div[1]/div/div[1]",
+            ".//*[@class='QvFrame Document_CH110']/div[3]/div[1]/div[1]/div[1]/div/div[1]",
+            ".//*[@class='QvFrame Document_CH25']/div[3]/div[1]/div[1]/div[1]/div/div[1]",
+            ".//*[@class='QvFrame Document_CH23']/div[3]/div[1]/div[1]/div[1]/div/div[1]",
+            ".//*[@class='QvFrame Document_CH26']/div[3]/div[1]/div[1]/div[1]/div/div[1]",
+            ".//*[@class='QvFrame Document_CH104']/div[3]/div[1]/div[1]/div[1]/div/div[1]",
+            ".//*[@class='QvFrame Document_CH112']/div[3]/div[1]/div[1]/div[1]/div/div[1]"
+        };
+
+        public IWebElement GetMarket(int n)
+        {
+            return _firefox.FindElement(By.XPath(_marketXPaths[n]));
+        }
+        /**MARKET NAME**/
+        //public IWebElement Market1
+        //{
+        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH19']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
+        //}
+
+        //public IWebElement Market2
+        //{
+        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH24']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
+        //}
+        //public IWebElement Market3
+        //{
+        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH110']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
+        //}
+        //public IWebElement Market4
+        //{
+        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH25']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
+        //}
+        //public IWebElement Market5 //ENTEROGERMINA Market + FS
+        //{
+        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH23']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
+        //}
+        //public IWebElement Market6
+        //{
+        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH26']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
+        //}
+        //public IWebElement Market7
+        //{
+        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH104']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
+        //}
+        //public IWebElement Market8
+        //{
+        //    get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH112']/div[3]/div[1]/div[1]/div[1]/div/div[1]")); }
+        //}
+
+        /**BRAND NAME**/
+
+        public IWebElement Brand1
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH19']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
+        }
+        public IWebElement Brand2
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH24']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
+        }
+        public IWebElement Brand3
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH110']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
+        }
+        public IWebElement Brand4
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH25']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
+        }
+        public IWebElement Brand5
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH23']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
+        }
+        public IWebElement Brand6
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH26']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
+        }
+        public IWebElement Brand7
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH104']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
+        }
+        public IWebElement Brand8
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH112']/div[3]/div[1]/div[1]/div[2]/div/div[3]")); }
+        }
+
+
+        /***VALUE**/
+        public IWebElement Value1
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH19']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
+        }
+        public IWebElement Value2
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH24']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
+        }
+        public IWebElement Value3
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH110']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
+        }
+        public IWebElement Value4
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH25']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
+        }
+        public IWebElement Value5
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH23']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
+        }
+        public IWebElement Value6
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH26']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
+        }
+        public IWebElement Value7
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH104']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
+        }
+        public IWebElement Value8
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH112']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
+        }
+
+        /********Page Elements (277)*********/
+
+        public IWebElement SelectMarketSearchElement277
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB1207']/div[2]/div[1]/div")); }
+        }
+
+        public IWebElement SelectMarketSearchInputField277
+        {
+            get { return _firefox.FindElement(By.CssSelector(".PopupSearch>input")); }
+        }
+
+        public IWebElement SelectedMarketElement277
+        {
+            get{ return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB1207']/div[3]/div/div[1]/div/div[1]"));}
+        }
+         public IWebElement BeginButton277
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_BU2056']/div[2]/button")); }
+        }
+         public IWebElement TestTotalTab277
+         {
+             get { return _firefox.FindElement(By.XPath(".//*[@rel='DocumentSH163']/a")); }
+         }
+         public IWebElement ChosePeriodWeekButton277
+         {
+             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB2626']/div[3]/div/div[1]/div[1]/div[1]")); }
+         }
+         public IWebElement ChosePeriodMonthButton277
+         {
+             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB2626']/div[3]/div/div[1]/div[2]/div[1]")); }
+         }
+         public IWebElement ChosePeriodQrtButton277
+         {
+             get { return _firefox.FindElements(By.XPath(".//*[@class='QvFrame Document_LB2626']/div[3]/div/div[1]/div[3]/div[1]"))[1]; }
+         }
+
+        /***CHOSE BRAND****/
+         public IWebElement FilterButton277
+         {
+             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_TX3803']/div[2]/table/tbody/tr/td")); }
+         }
+         public IWebElement BrandOption277
+         {
+             get { return _firefox.FindElement(By.XPath("//div[@class='QvFrame Document_LB2667']/div[3]/div/div[1]/div[1]")); }
+                                                         //div[@class='QvFrame Document_LB2667']/div[3]/div/div[1]/div[1]
+         }
+         public IWebElement ClearBrandElement277
+         {
+             get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2694']/div[2]/div[1]/div[2]")); }
+         }
+         public IWebElement SearchBrandButton277
+         {
+             get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2694']/div[2]/div[1]/div[3]")); }
+                                                       //div[@class='QvFrame Document_LB2694']/div[2]/div/div[3]
+         }
+         public IWebElement InputBrandField277
+         {
+             get { return _firefox.FindElement(By.XPath("html/body/div[2]/input")); }
+         }
+
+         public IWebElement SelectedBrand277
+         {
+             get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2694']/div[3]/div/div[1]/div/div[1]")); }
+         }
+        
+
+        /***********CHOSE GROUP*************/
+        public IWebElement GroupButton277
+         {
+             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_TX3495']/div[2]/table/tbody/tr/td")); }
+         }
+         public IWebElement ClearGroupElement277
+         {
+             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB2372']/div[2]/div[1]/div[1]")); }
+         }
+         public IWebElement SearchGroupButton277
+         {
+             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB2372']/div[2]/div[1]/div[2]")); }
+         }
+         public IWebElement InputGroupField277
+         {
+             get { return _firefox.FindElement(By.XPath("html/body/div[2]/input")); }
+         }
+         public IWebElement SelectedGroupElement277
+         {
+             get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2372']/div[3]/div/div[1]/div[1]")); }
+         }
+         public IWebElement TotalSum277
+         {
+             get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_CH1694']/div[3]/div[1]/div[1]/div[5]/div/div[1]")); }
+         }
+
+
+
+        /*******CHOSE GROUP*****/
+        //driver.findElement(By.xpath("//div[@class='QvFrame Document_LB2372']/div[3]/div/div[1]/div[1]/div[2]/div[2]/span[1]")) - первый элемент в выпадающем списке групп
+    }
+}

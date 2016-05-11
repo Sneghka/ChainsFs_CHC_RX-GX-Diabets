@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -23,6 +24,10 @@ namespace ChainsFs_CHC_RX_GX_Diabets
         private List<string> brandList = new List<string>();
         private List<string> valueList = new List<string>();
         private List<string> valueList277 = new List<string>();
+        private List<string> messageContent = new List<string>();
+
+        public string CheckigPeriod { get; set; }
+
         // private List<List<string>> dataList = new List<List<string>>(); 
 
 
@@ -45,6 +50,18 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             }
         }
 
+        public string MessageContent(List<string> list)
+        {
+            var sb = new StringBuilder();
+            foreach (var str in list)
+            {
+                sb.AppendLine(str);
+                sb.AppendLine("<br>");
+
+            }
+            return sb.ToString();
+        }
+
         public void LoginPage(string pageNumber)
         {
             WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(60));
@@ -55,19 +72,19 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             var loginElement = pageElements.LoginElement;
             var passwordElement = pageElements.PasswordElement;
             var loginButton = pageElements.LoginButton;
-            loginElement.SendKeys("");
-            passwordElement.SendKeys("");
+            loginElement.SendKeys("full_test");
+            passwordElement.SendKeys("aspirin222");
             loginButton.Click();
             WaitForAjax();
+            Thread.Sleep(6000);
             var continueButton = pageElements.ContinueButton;
             continueButton.Click();
+            WaitForAjax();
         }
-
 
 
         public void SetUpPageFilters()
         {
-
             WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(20));
             WaitForAjax();
             var pageElements = new PageElements(_firefox);
@@ -85,10 +102,9 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             {
                 currencyToggle.Click();
                 WaitForAjax();
-                //wait.Until(ExpectedConditions.TextToBePresentInElement(pageElements.Market1, "ESSENTIALE Market, UAH"));
-                //WaitForAjax();
-                var newCurrency = pageElements.CheckCurrencyMarket.Text;
-                Debug.WriteLine("Текущая валюта: " + newCurrency);
+                var newCurrency = pageElements.CheckCurrencyMarket;
+                wait.Until(ExpectedConditions.TextToBePresentInElement(newCurrency, " UAH"));
+                Debug.WriteLine("Текущая валюта: " + newCurrency.Text);
             }
         }
 
@@ -96,6 +112,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
         {
             WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(20));
             var pageElements = new PageElements(_firefox);
+            CheckigPeriod = pageElements.ChoosenPeriodText.GetAttribute("title");
             var removeMarket = " Market";
             var removeSanofi = " Sanofi";
             const int MAGIC_NUMBER = 8;
@@ -104,54 +121,47 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             for (int i = 1; i <= MAGIC_NUMBER; i++)
             {
                 markets[i] = pageElements.GetMarket(i).GetAttribute("title");
-                Debug.WriteLine(markets[i]);
             }
 
             var brands = new string[MAGIC_NUMBER + 1];
             for (int i = 1; i <= MAGIC_NUMBER; i++)
             {
-               
                 brands[i] = pageElements.GetBrand(i).GetAttribute("title");
-                Debug.WriteLine(brands[i]);
             }
-          
+
             var values = new string[MAGIC_NUMBER + 1];
             for (int i = 1; i <= MAGIC_NUMBER; i++)
             {
-               
                 values[i] = pageElements.GetValue(i).GetAttribute("title");
-                Debug.WriteLine(values[i]);
             }
-           
+
             for (int i = 1; i <= MAGIC_NUMBER; i++)
             {
                 if (i == 5 && markets[i] == "ENTEROGERMINA Market + FS") //ENTEROGERMINA Market + FS for CHC
                 {
                     marketList.Add(markets[i]);
+                    Debug.WriteLine("Market - " + marketList[i - 1]);
                     continue;
                 }
                 marketList.Add(markets[i].Substring(0, markets[i].Length - removeMarket.Length));
-               
-                Debug.WriteLine(marketList[i-1]);
+
+                Debug.WriteLine("Market - " + marketList[i - 1]);
             }
 
-          
+
             for (int i = 1; i <= MAGIC_NUMBER; i++)
             {
-               
                 var lenght = brands[i].Length;
-                brandList.Add(brands[i].Substring(4, lenght - removeSanofi.Length-4));
-                Debug.WriteLine(brandList[i-1] + "проверка цикла получения названия брендов");
+                brandList.Add(brands[i].Substring(4, lenght - removeSanofi.Length - 4));
+                Debug.WriteLine("Brand - " + brandList[i - 1]);
             }
-            Debug.WriteLine("Конец цикла добавления brand в список");
+
 
             for (int i = 1; i <= MAGIC_NUMBER; i++)
             {
-                valueList.Add(brands[i-1]);
+                valueList.Add(values[i]);
+                Debug.WriteLine("Value - " + valueList[i - 1]);
             }
-
-
-            Debug.WriteLine("market - " + marketList[0] + "/" + "brand - " + brandList[0] + "/" + "value - " + valueList[0]);
         }
 
 
@@ -169,6 +179,8 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             WaitForAjax();
             pageElements.SelectedMarketElement277.Click();
             WaitForAjax();
+            Thread.Sleep(10000);
+            wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.BeginButton277));
             pageElements.BeginButton277.Click();
             WaitForAjax();
             pageElements.TestTotalTab277.Click();
@@ -206,7 +218,6 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 pageElements.FilterButton277.Click();
                 WaitForAjax();
 
-                //wait.Until(ExpectedConditions.ElementExists(By.XPath("pageElements.BrandOption277")));
                 pageElements.BrandOption277.Click();
                 WaitForAjax();
                 pageElements.ClearBrandElement277.Click();
@@ -214,54 +225,71 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 pageElements.SearchBrandButton277.Click();
                 WaitForAjax();
 
-                Debug.WriteLine("Search " + brandList[i] + " brand");
-
                 pageElements.InputBrandField277.SendKeys(brandList[i]);
                 WaitForAjax();
 
-                Debug.WriteLine("Text in span is - " + _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2694']/div[3]/div/div[1]/div/div[2]/div[2]/span")).Text);
-
                 var action = new Actions(_firefox);
                 var selectedBrand277 = pageElements.SelectedBrand277;
-                action.MoveToElement(selectedBrand277, 10, 10).Click().Perform();
-
-
+                var selectedBrandName = pageElements.SelectedBrandName277.GetAttribute("title");
+                if (selectedBrandName != brandList[i])
+                {
+                    action.MoveToElement(_firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2694']/div[3]/div/div[1]/div[2]/div[1]")), 10, 10).Click().Perform();
+                }
+                else
+                {
+                    action.MoveToElement(selectedBrand277, 10, 10).Click().Perform();
+                }
                 WaitForAjax();
-                //Debug.WriteLine("Highlighted element " + pageElements.SelectedBrand277.Text);
-                Debug.WriteLine("Brand was selected " + _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2694']/div[3]/div/div[1]/div")).GetAttribute("title") + " - total " + pageElements.TotalSum277.GetAttribute("title"));
-
-                WaitForAjax();
-
+                Thread.Sleep(2000);
 
 
                 /******SELECT GROUP******/
-                /*  pageElements.GroupButton277.Click();
-                  WaitForAjax();
-                  pageElements.SearchGroupButton277.Click();
-                  WaitForAjax();
-                  pageElements.InputGroupField277.SendKeys(marketList[i]);
-                  WaitForAjax();
-                  pageElements.SelectedGroupElement277.Click();
-                  WaitForAjax();*/
+                pageElements.GroupButton277.Click();
+                WaitForAjax();
+                pageElements.SearchGroupButton277.Click();
+                WaitForAjax();
+                pageElements.InputGroupField277.SendKeys(marketList[i]);
+                WaitForAjax();
+
+                var selectedGroup = pageElements.SelectedGroupElement277;
+                action.MoveToElement(selectedGroup, 10, 10).Click().Perform();
+                WaitForAjax();
+                Thread.Sleep(2000);
 
                 /******COMPARE***********/
-                /*var value277 = pageElements.TotalSum277.GetAttribute("title");
+                var value277 = pageElements.TotalSum277.GetAttribute("title");
                 valueList277.Add(value277);
 
                 if (value277 == valueList[i])
-                    Debug.WriteLine("<html><font color=green>" + marketList[i] + " " + valueList[i] + " = " + value277 + ";</html>");
+                {
+                    Debug.WriteLine("<html><font color=green>" + "<b>" + marketList[i] + "</b>" +" " + valueList[i] + " = " + value277 +
+                                    ";</html>");
+                    messageContent.Add("<html><font color=green>" + "<b>" + marketList[i] + "</b>" + " " + valueList[i] + " = " + value277 + ";</html>");
+                }
                 else
                 {
-                    Debug.WriteLine("<html><font color=red>" + marketList[i] + " " + valueList[i] + " НЕ РАВНО " + value277 + ";</html>");
-                }*/
+                    Debug.WriteLine("<html><font color=red>" + "<b>" + marketList[i] + "</b>" + " " + valueList[i] + "  !! НЕ РАВНО !!  " +
+                                    value277 + ";</html>");
+                    messageContent.Add("<html><font color=red>" + marketList[i] + " " + valueList[i] + "  !! НЕ РАВНО !!  " +
+                                    value277 + ";</html>");
+                }
 
             }
 
         }
 
-
-
-
+        public void email_send(string subject)
+        {
+            var mail = new MailMessage();
+            mail.IsBodyHtml = true;
+            var smtpServer = new SmtpClient("post.morion.ua");
+            mail.From = new MailAddress("snizhana.nomirovska@proximaresearch.com");
+            mail.To.Add("snizhana.nomirovska@proximaresearch.com");
+            // mail.To.Add("nataly.tenkova@proximaresearch.com");
+            mail.Subject = subject;
+            mail.Body = MessageContent(messageContent);
+            smtpServer.Send(mail);
+        }
     }
 }
 

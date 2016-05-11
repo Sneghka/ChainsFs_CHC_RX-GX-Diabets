@@ -30,6 +30,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             methods.LoginPage277();
             methods.SetUpFilterForWeekPage277();
             methods.CheckData();
+            methods.email_send("Check data Chainsfs Common Test & CHC. Period: " + methods.CheckigPeriod);
 
              firefox.Quit();
 

@@ -43,8 +43,13 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
 
         //PAGE ELEMENTS
         /******PERIOD******/
+        
         public IWebElement ChoosenPeriod {
             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[3]/div[1]")); }
+        }
+        public IWebElement ChoosenPeriodText
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[3]")); }
         }
         public IWebElement ChosePeriodWeekButton
         {
@@ -137,40 +142,10 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
             return _firefox.FindElement(By.XPath(_valueXPaths[n]));
         }
 
-        /*     public IWebElement Value1
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH19']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
-        }
-        public IWebElement Value2
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH24']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
-        }
-        public IWebElement Value3
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH110']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
-        }
-        public IWebElement Value4
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH25']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
-        }
-        public IWebElement Value5
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH23']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
-        }
-        public IWebElement Value6
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH26']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
-        }
-        public IWebElement Value7
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH104']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
-        }
-        public IWebElement Value8
-        {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH112']/div[3]/div[1]/div[1]/div[5]/div/div[6]")); }
-        }*/
-
+        
         /********Page Elements (277)*********/
+
+        /***LOGIN PAGE277***/
 
         public IWebElement SelectMarketSearchElement277
         {
@@ -190,6 +165,8 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
         {
             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_BU2056']/div[2]/button")); }
         }
+
+        /*****SET UP FILTERS******/
          public IWebElement TestTotalTab277
          {
              get { return _firefox.FindElement(By.XPath(".//*[@rel='DocumentSH163']/a")); }
@@ -215,7 +192,6 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
          public IWebElement BrandOption277
          {
              get { return _firefox.FindElement(By.XPath("//div[@class='QvFrame Document_LB2667']/div[3]/div/div[1]/div[1]")); }
-                                                         //div[@class='QvFrame Document_LB2667']/div[3]/div/div[1]/div[1]
          }
          public IWebElement ClearBrandElement277
          {
@@ -233,9 +209,12 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
 
          public IWebElement SelectedBrand277
          {
-             get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2694']/div[3]/div/div[1]/div/div[1]")); }
+             get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2694']/div[3]/div/div[1]/div[1]/div[1]")); }
          }
-        
+         public IWebElement SelectedBrandName277
+         {
+             get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2694']/div[3]/div/div[1]/div[1]")); }
+         }
 
         /***********CHOSE GROUP*************/
         public IWebElement GroupButton277

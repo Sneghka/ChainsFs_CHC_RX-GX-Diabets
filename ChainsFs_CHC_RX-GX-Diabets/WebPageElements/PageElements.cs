@@ -147,6 +147,8 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
 
         /***LOGIN PAGE277***/
 
+
+
         public IWebElement SelectMarketSearchElement277
         {
             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB1207']/div[2]/div[1]/div")); }

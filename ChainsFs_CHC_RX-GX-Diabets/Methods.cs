@@ -26,7 +26,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
         private List<string> valueList277 = new List<string>();
         private List<string> messageContent = new List<string>();
 
-        public string CheckigPeriod { get; set; }
+        public string CheckingPeriod { get; set; }
 
         // private List<List<string>> dataList = new List<List<string>>(); 
 
@@ -46,7 +46,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                     Thread.Sleep(4000);
                     break;
                 }
-                Thread.Sleep(4000);
+                Thread.Sleep(6000);
             }
         }
 
@@ -68,6 +68,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             _firefox.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(60));
             var pageElements = new PageElements(_firefox);
             _firefox.Navigate().GoToUrl("http://pharmxplorer.com.ua/" + pageNumber);
+            WaitForAjax();
 
             var loginElement = pageElements.LoginElement;
             var passwordElement = pageElements.PasswordElement;
@@ -108,14 +109,33 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             }
         }
 
+        public void SetUpMonthPeriod()
+        {
+            WaitForAjax();
+            var pageElements = new PageElements(_firefox);
+            pageElements.ChosePeriodMonthButton.Click();
+            WaitForAjax();
+            
+        }
+
+        
         public void StorePageData() //store data from CHC/RG / GX /Diabets
         {
             WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(20));
             var pageElements = new PageElements(_firefox);
-            CheckigPeriod = pageElements.ChoosenPeriodText.GetAttribute("title");
+            CheckingPeriod = pageElements.ChoosenPeriodText.GetAttribute("title");
             var removeMarket = " Market";
             var removeSanofi = " Sanofi";
-            const int MAGIC_NUMBER = 8;
+            var currentUrl = _firefox.Url;
+            int MAGIC_NUMBER;
+            if (currentUrl == "http://pharmxplorer.com.ua/337")
+            {
+                  MAGIC_NUMBER = 2;
+            }
+            else
+            {
+                  MAGIC_NUMBER = 8;
+            }
 
             var markets = new string[MAGIC_NUMBER + 1];
             for (int i = 1; i <= MAGIC_NUMBER; i++)
@@ -137,7 +157,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
 
             for (int i = 1; i <= MAGIC_NUMBER; i++)
             {
-                if (i == 5 && markets[i] == "ENTEROGERMINA Market + FS") //ENTEROGERMINA Market + FS for CHC
+                if (markets[i] == "ENTEROGERMINA Market + FS" || markets[i] == "PLAVIX Market" || markets[i] == "OADs Amaryl M Market" || markets[i] == "OADs Amaryl Market") //ENTEROGERMINA Market + FS for CHC
                 {
                     marketList.Add(markets[i]);
                     Debug.WriteLine("Market - " + marketList[i - 1]);
@@ -217,14 +237,16 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 /******SELECT BRAND******/
                 pageElements.FilterButton277.Click();
                 WaitForAjax();
-
+                wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.BrandOption277));
                 pageElements.BrandOption277.Click();
                 WaitForAjax();
+                wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.ClearBrandElement277));
                 pageElements.ClearBrandElement277.Click();
                 WaitForAjax();
+                wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.SelectedBrand277));
                 pageElements.SearchBrandButton277.Click();
                 WaitForAjax();
-
+                Thread.Sleep(2000);
                 pageElements.InputBrandField277.SendKeys(brandList[i]);
                 WaitForAjax();
 
@@ -246,6 +268,8 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 /******SELECT GROUP******/
                 pageElements.GroupButton277.Click();
                 WaitForAjax();
+                pageElements.ClearGroupElement277.Click();
+                WaitForAjax();
                 pageElements.SearchGroupButton277.Click();
                 WaitForAjax();
                 pageElements.InputGroupField277.SendKeys(marketList[i]);
@@ -254,7 +278,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 var selectedGroup = pageElements.SelectedGroupElement277;
                 action.MoveToElement(selectedGroup, 10, 10).Click().Perform();
                 WaitForAjax();
-                Thread.Sleep(2000);
+                Thread.Sleep(6000);
 
                 /******COMPARE***********/
                 var value277 = pageElements.TotalSum277.GetAttribute("title");
@@ -262,14 +286,14 @@ namespace ChainsFs_CHC_RX_GX_Diabets
 
                 if (value277 == valueList[i])
                 {
-                    Debug.WriteLine("<html><font color=green>" + "<b>" + marketList[i] + "</b>" +" " + valueList[i] + " = " + value277 +
-                                    ";</html>");
+                    Debug.WriteLine( marketList[i] + ":  " + valueList[i] + " = " + value277 +
+                                    ";");
                     messageContent.Add("<html><font color=green>" + "<b>" + marketList[i] + "</b>" + " " + valueList[i] + " = " + value277 + ";</html>");
                 }
                 else
                 {
-                    Debug.WriteLine("<html><font color=red>" + "<b>" + marketList[i] + "</b>" + " " + valueList[i] + "  !! НЕ РАВНО !!  " +
-                                    value277 + ";</html>");
+                    Debug.WriteLine(marketList[i] + ": " + " " + valueList[i] + "  !! НЕ РАВНО !!  " +
+                                    value277 + ";");
                     messageContent.Add("<html><font color=red>" + marketList[i] + " " + valueList[i] + "  !! НЕ РАВНО !!  " +
                                     value277 + ";</html>");
                 }

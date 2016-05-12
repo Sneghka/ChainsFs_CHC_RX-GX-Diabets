@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Methods.cs" />
+    <Compile Include="MonthlyTest.cs" />
     <Compile Include="WebPageElements\PageElements.cs" />
     <Compile Include="WeeklyTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChosePeriodForChecking.cs" />
     <Compile Include="Methods.cs" />
     <Compile Include="MonthlyTest.cs" />
     <Compile Include="WebPageElements\PageElements.cs" />

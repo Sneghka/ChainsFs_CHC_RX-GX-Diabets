@@ -64,6 +64,31 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[3]/div[1]")); }
         }
 
+        public IWebElement DropDownMenu
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[1]/div[1]")); }
+        }
+
+        public IWebElement DropDownPeriodMenu
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame DS']/div/div/div[1]")); }
+        }
+
+        public IWebElement InputFieldChoosenPeriod
+        {
+            get { return _firefox.FindElement(By.XPath("html/body/div[2]/input")); }
+        }
+
+        public IWebElement DropDownChoosenPeriod
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame DS']/div/div/div[1]/div[1]")); }
+        }
+
+        public IWebElement SearchOptionContextMenu
+        {
+            get { return _firefox.FindElement(By.XPath("html/body/ul/li[1]/a/span")); }
+        }
+
 
         /*********Filters*********/
         public IWebElement SalesRadioButton
@@ -147,8 +172,6 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
 
         /***LOGIN PAGE277***/
 
-
-
         public IWebElement SelectMarketSearchElement277
         {
             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB1207']/div[2]/div[1]/div")); }
@@ -185,6 +208,16 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
          {
              get { return _firefox.FindElements(By.XPath(".//*[@class='QvFrame Document_LB2626']/div[3]/div/div[1]/div[3]/div[1]"))[1]; }
          }
+         public IWebElement PeriodButton277
+         {
+             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_TX3506']")); }
+              /*get { return _firefox.FindElements(By.XPath(".//*[@class='QvFrame Document_TX3506']/div[2]/table/tbody/tr/td"))[1]; }*/
+         }
+
+        public IWebElement DropDownPeriodMenu277
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_MB585']/div[3]/div/div[1]/div[5]/div/div[3]")); }
+        }
 
         /***CHOSE BRAND****/
          public IWebElement FilterButton277

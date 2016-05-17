@@ -43,10 +43,10 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 var ajaxIsComplete = (bool)(_firefox as IJavaScriptExecutor).ExecuteScript("return jQuery.active == 0");
                 if (ajaxIsComplete)
                 {
-                    Thread.Sleep(4000);
+                    Thread.Sleep(3000);
                     break;
                 }
-                Thread.Sleep(6000);
+                Thread.Sleep(5000);
             }
         }
 
@@ -103,6 +103,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             {
                 currencyToggle.Click();
                 WaitForAjax();
+                Thread.Sleep(4000);
                 var newCurrency = pageElements.CheckCurrencyMarket;
                 wait.Until(ExpectedConditions.TextToBePresentInElement(newCurrency, " UAH"));
                 Debug.WriteLine("Текущая валюта: " + newCurrency.Text);
@@ -115,10 +116,52 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             var pageElements = new PageElements(_firefox);
             pageElements.ChosePeriodMonthButton.Click();
             WaitForAjax();
-            
+
+        }
+        public void SetUpQuarterPeriod()
+        {
+            WaitForAjax();
+            var pageElements = new PageElements(_firefox);
+            pageElements.ChosePeriodQrtButton277.Click();
+            WaitForAjax();
+
         }
 
-        
+        public void SetUpChoosenPeriod(string period)
+        {
+            WaitForAjax();
+            var pageElements = new PageElements(_firefox);
+            if (period.Contains("W"))
+            {
+                Debug.WriteLine("choosen period week");
+                pageElements.ChosePeriodWeekButton.Click();
+                WaitForAjax();
+            }
+            else if (period.Contains("Q"))
+            {
+                Debug.WriteLine("choosen period QRT");
+                pageElements.ChosePeriodQrtButton.Click();
+                WaitForAjax();
+            }
+            else
+            {
+                Debug.WriteLine("choosen period month");
+                pageElements.ChosePeriodMonthButton.Click();
+                WaitForAjax();
+            }
+
+            var action = new Actions(_firefox);
+            pageElements.DropDownMenu.Click();
+            WaitForAjax();
+            action.ContextClick(pageElements.DropDownChoosenPeriod).Perform();
+            pageElements.SearchOptionContextMenu.Click();
+            pageElements.InputFieldChoosenPeriod.SendKeys(period);
+            WaitForAjax();
+            action.MoveToElement(pageElements.DropDownChoosenPeriod, 5, 5).Click().Perform();
+            WaitForAjax();
+        }
+
+
         public void StorePageData() //store data from CHC/RG / GX /Diabets
         {
             WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(20));
@@ -130,11 +173,11 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             int MAGIC_NUMBER;
             if (currentUrl == "http://pharmxplorer.com.ua/337")
             {
-                  MAGIC_NUMBER = 2;
+                MAGIC_NUMBER = 2;
             }
             else
             {
-                  MAGIC_NUMBER = 8;
+                MAGIC_NUMBER = 8;
             }
 
             var markets = new string[MAGIC_NUMBER + 1];
@@ -192,6 +235,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             var pageElements = new PageElements(_firefox);
             _firefox.Navigate().GoToUrl("http://pharmxplorer.com.ua/277");
             WaitForAjax();
+            Thread.Sleep(10000);
 
             pageElements.SelectMarketSearchElement277.Click();
             WaitForAjax();
@@ -226,6 +270,42 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             pageElements.ChosePeriodQrtButton277.Click();
             WaitForAjax();
         }
+        public void SetUpChoosenPeriod277(string period)
+        {
+            WaitForAjax();
+            var pageElements = new PageElements(_firefox);
+            if (period.Contains("W"))
+            {
+                Debug.WriteLine("choosen period week");
+                pageElements.ChosePeriodWeekButton277.Click();
+                WaitForAjax();
+            }
+            else if (period.Contains("Q"))
+            {
+                Debug.WriteLine("choosen period QRT");
+                pageElements.ChosePeriodQrtButton277.Click();
+                WaitForAjax();
+            }
+            else
+            {
+                Debug.WriteLine("choosen period month");
+                pageElements.ChosePeriodMonthButton277.Click();
+                WaitForAjax();
+            }
+
+            var action = new Actions(_firefox);
+            pageElements.PeriodButton277.Click();
+            WaitForAjax();
+            pageElements.DropDownPeriodMenu277.Click();
+            WaitForAjax();
+            action.ContextClick(pageElements.DropDownChoosenPeriod).Perform();
+            WaitForAjax();
+            pageElements.SearchOptionContextMenu.Click();
+            pageElements.InputFieldChoosenPeriod.SendKeys(period);
+            WaitForAjax();
+            action.MoveToElement(pageElements.DropDownChoosenPeriod, 5, 5).Click().Perform();
+            WaitForAjax();
+        }
 
         public void CheckData()
         {
@@ -243,7 +323,8 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.ClearBrandElement277));
                 pageElements.ClearBrandElement277.Click();
                 WaitForAjax();
-                wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.SelectedBrand277));
+                Thread.Sleep(2000);
+                wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.SearchBrandButton277));
                 pageElements.SearchBrandButton277.Click();
                 WaitForAjax();
                 Thread.Sleep(2000);
@@ -286,7 +367,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
 
                 if (value277 == valueList[i])
                 {
-                    Debug.WriteLine( marketList[i] + ":  " + valueList[i] + " = " + value277 +
+                    Debug.WriteLine(marketList[i] + ":  " + valueList[i] + " = " + value277 +
                                     ";");
                     messageContent.Add("<html><font color=green>" + "<b>" + marketList[i] + "</b>" + " " + valueList[i] + " = " + value277 + ";</html>");
                 }
@@ -309,7 +390,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             var smtpServer = new SmtpClient("post.morion.ua");
             mail.From = new MailAddress("snizhana.nomirovska@proximaresearch.com");
             mail.To.Add("snizhana.nomirovska@proximaresearch.com");
-            // mail.To.Add("nataly.tenkova@proximaresearch.com");
+            //mail.To.Add("nataly.tenkova@proximaresearch.com");
             mail.Subject = subject;
             mail.Body = MessageContent(messageContent);
             smtpServer.Send(mail);

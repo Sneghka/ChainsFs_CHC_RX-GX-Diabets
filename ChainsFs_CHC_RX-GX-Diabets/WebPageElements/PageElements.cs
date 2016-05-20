@@ -43,6 +43,14 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
 
         //PAGE ELEMENTS
         /******PERIOD******/
+
+        //(.//*[@class='QvFrame Document_CH112']/div[6]/div/img) Loading Element
+        // src = "/QvAjaxZfc/htc/Images/Working.gif"
+
+        public IWebElement LoadingImage
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_CH24']/div[6]/div/img")); }
+        }
         
         public IWebElement ChoosenPeriod {
             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[3]/div[1]")); }
@@ -189,6 +197,11 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
          public IWebElement BeginButton277
         {
             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_BU2056']/div[2]/button")); }
+        }
+
+        public IWebElement LoadingImageTestTotal277
+        {
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB2620']/div[6]/div/img")); }
         }
 
         /*****SET UP FILTERS******/

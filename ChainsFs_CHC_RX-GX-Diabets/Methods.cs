@@ -15,8 +15,20 @@ using ChainsFs_CHC_RX_GX_Diabets.WebPageElements;
 using NUnit.Framework;
 using OpenQA.Selenium.Interactions;
 
+
+
+
 namespace ChainsFs_CHC_RX_GX_Diabets
 {
+
+    public static class StringExtensions
+    {
+        public static bool ContainsIgnoreCase(this string source, string toCheck)
+        {
+            return source.IndexOf(toCheck, StringComparison.CurrentCultureIgnoreCase) >= 0;
+        }
+    }
+
     public class Methods
     {
         private readonly FirefoxDriver _firefox;
@@ -43,13 +55,136 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 var ajaxIsComplete = (bool)(_firefox as IJavaScriptExecutor).ExecuteScript("return jQuery.active == 0");
                 if (ajaxIsComplete)
                 {
-                    Thread.Sleep(2000);
+                    Thread.Sleep(3000);
                     break;
                 }
-                Thread.Sleep(2000);
+                Thread.Sleep(3000);
             }
         }
 
+        public void WaitForTextInTitleAttribute(string locator, string text)
+        {
+            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
+            const int waitRetryDelayMs = 1000; //шаг итерации (задержка)
+            const int timeOut = 500; //время тайм маута 
+            bool first = true;
+
+            for (int milliSecond = 0; ; milliSecond += waitRetryDelayMs)
+            {
+                if (milliSecond > timeOut * 10000)
+                {
+                    Debug.WriteLine("Timeout: Text " + text + " is not found ");
+                    break; //если время ожидания закончилось (элемент за выделенное время не был найден)
+                }
+                _firefox.Manage().Timeouts().SetPageLoadTimeout(TimeSpan.FromSeconds(60));
+                _firefox.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(60));
+                wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(locator)));
+                if (_firefox.FindElement(By.XPath(locator)).GetAttribute("title") == text)
+                {
+                    if (!first) Debug.WriteLine("Text is found: " + text);
+                    break; //если элемент найден
+                }
+
+                if (first) Debug.WriteLine("Waiting for text is present: " + text);
+
+                first = false;
+                Thread.Sleep(waitRetryDelayMs);
+            }
+        }
+        
+        public void WaitForTextInClassAttribute(string locator, string text)
+        {
+            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
+            const int waitRetryDelayMs = 1000; //шаг итерации (задержка)
+            const int timeOut = 500; //время тайм маута 
+            bool first = true;
+
+            for (int milliSecond = 0; ; milliSecond += waitRetryDelayMs)
+            {
+                if (milliSecond > timeOut * 10000)
+                {
+                    Debug.WriteLine("Timeout: Text '" + text + "' is not found ");
+                    break; //если время ожидания закончилось (элемент за выделенное время не был найден)
+                }
+                _firefox.Manage().Timeouts().SetPageLoadTimeout(TimeSpan.FromSeconds(60));
+                _firefox.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(60));
+                wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(locator)));
+                if (_firefox.FindElement(By.CssSelector(locator)).GetAttribute("class") == text)
+                {
+                    if (!first) Debug.WriteLine("Text is found: '" + text);
+                    break; //если элемент найден
+                }
+
+                if (first) Debug.WriteLine("Waiting for text is present: '" + text);
+
+                first = false;
+                Thread.Sleep(waitRetryDelayMs);
+            }
+        }
+
+        public void WaitPatternPresentInText(string locator, string text)
+        {
+            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
+            const int waitRetryDelayMs = 1000; //шаг итерации (задержка)
+            const int timeOut = 500; //время тайм маута 
+            bool first = true;
+
+            for (int milliSecond = 0; ; milliSecond += waitRetryDelayMs)
+            {
+                if (milliSecond > timeOut * 10000)
+                {
+                    Debug.WriteLine("Timeout: Text " + text + " is not found ");
+                    break; //если время ожидания закончилось (элемент за выделенное время не был найден)
+                }
+                _firefox.Manage().Timeouts().SetPageLoadTimeout(TimeSpan.FromSeconds(60));
+                _firefox.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(60));
+                wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(locator)));
+                Debug.WriteLine("Loop - element is visible");
+                if (_firefox.FindElement(By.XPath(locator)).Text.ContainsIgnoreCase(text))
+                {
+                    if (!first) Debug.WriteLine("Text is found: " + text);
+                    break; //если элемент найден
+                }
+
+                if (first) Debug.WriteLine("Waiting for text is present: " + text);
+
+                first = false;
+                Thread.Sleep(waitRetryDelayMs);
+            }
+        }
+
+        public void WaitAndClickElement(string locator)
+        {
+            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
+            const int waitRetryDelayMs = 1000; //шаг итерации (задержка)
+            const int timeOut = 500; //время тайм маута 
+            bool first = true;
+
+            for (int milliSecond = 0; ; milliSecond += waitRetryDelayMs)
+            {
+                if (milliSecond > timeOut * 10000)
+                {
+                    Debug.WriteLine("Timeout: Element is not found by locator - " + locator);
+                    break; //если время ожидания закончилось (элемент за выделенное время не был найден)
+                }
+                _firefox.Manage().Timeouts().SetPageLoadTimeout(TimeSpan.FromSeconds(60));
+                _firefox.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(60));
+                wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(locator)));
+                if (_firefox.FindElement(By.XPath(locator)).Enabled)
+                {
+                    _firefox.FindElement(By.XPath(locator)).Click();
+                    WaitForAjax();
+                    if (!first) Debug.WriteLine("Element is disable");
+                    break; //если элемент найден
+                }
+
+                if (first) Debug.WriteLine("Waiting for is clickable");
+
+                first = false;
+                Thread.Sleep(waitRetryDelayMs);
+            }
+        }
+        
         public string MessageContent(List<string> list)
         {
             var sb = new StringBuilder();
@@ -64,38 +199,31 @@ namespace ChainsFs_CHC_RX_GX_Diabets
 
         public void LoginPage(string pageNumber)
         {
-            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(60));
+            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
             var pageElements = new PageElements(_firefox);
             _firefox.Navigate().GoToUrl("http://pharmxplorer.com.ua/" + pageNumber);
             wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.Id("submit")));
-
-            var loginElement = pageElements.LoginElement;
-            var passwordElement = pageElements.PasswordElement;
-            var loginButton = pageElements.LoginButton;
-            loginElement.SendKeys("full_test");
-            passwordElement.SendKeys("aspirin222");
-            loginButton.Click();
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.Id("WorkingGif")));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//div[@class='QvFrame Document_BU04']/div[2]/button")));
-            var continueButton = pageElements.ContinueButton;
-            continueButton.Click();
-            wait.Until(
-                 ExpectedConditions.ElementIsVisible(By.XPath("//*[@class='QvFrame Document_LB129']/div[3]/div/div[1]/div[1]/div[1]")));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[@class='QvFrame Document_LB129']/div[3]/div/div[1]/div[1]/div[1]")));
+            pageElements.LoginElement.SendKeys("full_test");
+            pageElements.PasswordElement.SendKeys("aspirin222");
+            pageElements.LoginButton.Click();
+            // Continue через раз не кликается. К чему привязаться???
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.ContinueButtonXPath)));
+            pageElements.ContinueButton.Click();
         }
-
 
         public void SetUpPageFilters()
         {
-            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(60));
+            Debug.WriteLine("Login success");
+            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
             var pageElements = new PageElements(_firefox);
-            var salesRadioButton = pageElements.SalesRadioButton;
-            salesRadioButton.Click();
-            //wait.Until(ExpectedConditions.StalenessOf(pageElements.LoadingImage));   НЕ РАБОТАЕТ!!!
 
-            WaitForAjax(); /////????????????????? к чему привязаться
-
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(".//*[@class='QvFrame Document_BU56']/div[3]/button")));
+            //через раз не видит кнопку Salase в DOM. Новый метод - ждёт и кликает! (тоже не срабатывает). 
+            // Добавила в метод неявное ожидание загрузки страницы и неявное ожидание загрузки скриптов
+            WaitForAjax();
+            WaitAndClickElement(PageElements.SalesRadioButtonXPath);
+            //
+            Debug.WriteLine("Market after clicking sale button - " + pageElements.CheckCurrencyMarket.Text);
+            WaitPatternPresentInText(PageElements.CheckCurrencyMarketXPath, ",");
             var globalMarket = pageElements.CheckCurrencyMarket.Text;
             var currency = globalMarket.Substring(globalMarket.Length - 4);
             Debug.WriteLine("Текущая валюта: " + currency);
@@ -104,11 +232,8 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             if (currency == "kUAH")
             {
                 currencyToggle.Click();
-
-                //WaitForAjax();
-                var newCurrency = pageElements.CheckCurrencyMarket;
-                wait.Until(ExpectedConditions.TextToBePresentInElement(newCurrency, " UAH"));
-                Debug.WriteLine("Новая текущая валюта: " + newCurrency.Text);
+                WaitPatternPresentInText(PageElements.CheckCurrencyMarketXPath, " UAH");
+                Debug.WriteLine("Новая текущая валюта: " + pageElements.CheckCurrencyMarket.Text);
             }
         }
 
@@ -128,53 +253,55 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             WaitForAjax();
 
         }
-
         public void SetUpChoosenPeriod(string period)
         {
-            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(60));
+            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
 
             var pageElements = new PageElements(_firefox);
             if (period.Contains("W"))
             {
-                Debug.WriteLine("choosen period week");
                 pageElements.ChosePeriodWeekButton.Click();
-                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[3]/div[1]")));
+                WaitForAjax();
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.ChoosenPeriodXpath)));
+                Debug.WriteLine("choosen period week");
             }
             else if (period.Contains("Q"))
             {
-                Debug.WriteLine("choosen period QRT");
                 pageElements.ChosePeriodQrtButton.Click();
-                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[3]/div[1]")));
+                WaitForAjax();
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.ChoosenPeriodXpath)));
+                Debug.WriteLine("choosen period QRT");
             }
             else
             {
-                Debug.WriteLine("choosen period month");
                 pageElements.ChosePeriodMonthButton.Click();
-                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[3]/div[1]")));
+                WaitForAjax();
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.ChoosenPeriodXpath)));
+                Debug.WriteLine("choosen period month");
             }
 
             var action = new Actions(_firefox);
             pageElements.DropDownMenu.Click();
-            WaitForAjax();
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//*[@class='QvFrame DS']/div/div/div[1]/div[1]")));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.DropDownChoosenPeriodXPath)));
             action.ContextClick(pageElements.DropDownChoosenPeriod).Perform();
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("html/body/ul/li[1]/a/span")));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.SearchOptionContextMenuXPath)));
             pageElements.SearchOptionContextMenu.Click();
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("html/body/div[2]/input")));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.InputFieldChoosenPeriodXPath)));
             pageElements.InputFieldChoosenPeriod.SendKeys(period);
-
-            WaitForAjax(); /////????????????????? к чему привязаться
-
-            Debug.WriteLine(pageElements.DropDownChoosenPeriod.GetAttribute("title"));
+            Debug.WriteLine("Wait text in title" + period);
+            WaitForTextInTitleAttribute(PageElements.DropDownChoosenPeriodXPath, period);
+            Debug.WriteLine("Click choosen period");
             action.MoveToElement(pageElements.DropDownChoosenPeriod, 5, 5).Click().Perform();
-            WaitForAjax(); /////????????????????? к чему привязаться
-
+            Debug.WriteLine("Wait text in title of choosen period" + period);
+            WaitForAjax();
+            WaitForTextInTitleAttribute(PageElements.ChoosenPeriodXpath, period);
+            Debug.WriteLine("Choosen period " + pageElements.ChoosenPeriod.GetAttribute("title"));
         }
-
 
         public void StorePageData() //store data from CHC/RG / GX /Diabets
         {
-            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(20));
+            Debug.WriteLine("SetUpPageFilters method success");
+            WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
             var pageElements = new PageElements(_firefox);
             CheckingPeriod = pageElements.ChoosenPeriodText.GetAttribute("title");
             var removeMarket = " Market";
@@ -213,12 +340,12 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 if (markets[i] == "ENTEROGERMINA Market + FS" || markets[i] == "PLAVIX Market" || markets[i] == "OADs Amaryl M Market" || markets[i] == "OADs Amaryl Market") //ENTEROGERMINA Market + FS for CHC
                 {
                     marketList.Add(markets[i]);
-                    Debug.WriteLine("Market - " + marketList[i - 1]);
+                    //Debug.WriteLine("Market - " + marketList[i - 1]);
                     continue;
                 }
                 marketList.Add(markets[i].Substring(0, markets[i].Length - removeMarket.Length));
 
-                Debug.WriteLine("Market - " + marketList[i - 1]);
+                //Debug.WriteLine("Market - " + marketList[i - 1]);
             }
 
 
@@ -226,38 +353,46 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             {
                 var lenght = brands[i].Length;
                 brandList.Add(brands[i].Substring(4, lenght - removeSanofi.Length - 4));
-                Debug.WriteLine("Brand - " + brandList[i - 1]);
+                //Debug.WriteLine("Brand - " + brandList[i - 1]);
             }
 
 
             for (int i = 1; i <= MAGIC_NUMBER; i++)
             {
                 valueList.Add(values[i]);
-                Debug.WriteLine("Value - " + valueList[i - 1]);
+                //Debug.WriteLine("Value - " + valueList[i - 1]);
+            }
+
+            for (int i = 1; i <= MAGIC_NUMBER; i++)
+            {
+                Debug.WriteLine(marketList[i - 1] + " (brand - " + brandList[i - 1] + ")  " + valueList[i - 1]);
             }
         }
-
-
+        
         public void LoginPage277()
         {
+            Debug.WriteLine("StorePageData method success");
             WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
             var pageElements = new PageElements(_firefox);
             _firefox.Navigate().GoToUrl("http://pharmxplorer.com.ua/277");
-            Thread.Sleep(4000);
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//*[@class='QvFrame Document_LB1207']/div[2]/div[1]/div")));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(".//*[@class='QvFrame Document_LB1207']/div[2]/div[1]/div")));
-          pageElements.SelectMarketSearchElement277.Click();
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.SelectMarketSearchElement277XPath)));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.SelectMarketSearchElement277XPath)));
+            pageElements.SelectMarketSearchElement277.Click();
             wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".PopupSearch>input")));
             pageElements.SelectMarketSearchInputField277.SendKeys("Sanofi");
-           pageElements.SelectedMarketElement277.Click();
-           wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.BeginButton277));
+            WaitForTextInTitleAttribute(PageElements.SelectedMarketElement277XPath, "Sanofi (France)");
+            pageElements.SelectedMarketElement277.Click();
+            Thread.Sleep(6000);
+            Debug.WriteLine("Selected Market " + pageElements.SelectedMarketElement277.GetAttribute("title"));
+            wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.BeginButton277));
             pageElements.BeginButton277.Click();
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//*[@rel='DocumentSH163']/a")));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(".//*[@rel='DocumentSH163']/a")));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.TestTotalTabXPath)));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.TestTotalTabXPath)));
             pageElements.TestTotalTab277.Click();
-            Debug.WriteLine("Looking for filter button");
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//*[@class='QvFrame Document_TX3803']/div[2]/table/tbody/tr/td")));
-            Debug.WriteLine("Login success");
+            Debug.WriteLine("Looking for filter button 277");
+            WaitForAjax();
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.FilterButton277Xpath)));
+            Debug.WriteLine("Login 277 success");
         }
 
         public void SetUpFilterForWeekPage277()
@@ -266,51 +401,66 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             pageElements.ChosePeriodWeekButton277.Click();
             WaitForAjax();
             Thread.Sleep(4000);
+            Debug.WriteLine("Choosen period - week");
         }
         public void SetUpFilterForMonthPage277()
         {
             var pageElements = new PageElements(_firefox);
             pageElements.ChosePeriodMonthButton277.Click();
             WaitForAjax();
+            Debug.WriteLine("Choosen period - month");
         }
         public void SetUpFilterForQrtPage277()
         {
             var pageElements = new PageElements(_firefox);
             pageElements.ChosePeriodQrtButton277.Click();
             WaitForAjax();
+            Debug.WriteLine("Choosen period - Qrt");
         }
         public void SetUpChoosenPeriod277(string period)
         {
             WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//*[@class='QvFrame Document_LB2626']/div[3]/div/div[1]/div[1]/div[1]")));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(".//*[@class='QvFrame Document_LB2626']/div[3]/div/div[1]/div[1]/div[1]")));
+
+            wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath(".//*[@id='MainContainer']")));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.ChosePeriodWeekButton277XPath)));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.ChosePeriodWeekButton277XPath)));
 
             var pageElements = new PageElements(_firefox);
             if (period.Contains("W"))
             {
-                Debug.WriteLine("choosen period week");
                 pageElements.ChosePeriodWeekButton277.Click();
-                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(".//*[@class='QvFrame Document_TX3506']")));
+                WaitForAjax();
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.PeriodButton277XPath)));
+                Debug.WriteLine("choosen period week");
             }
             else if (period.Contains("Q"))
             {
-                Debug.WriteLine("choosen period QRT");
                 pageElements.ChosePeriodQrtButton277.Click();
-                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(".//*[@class='QvFrame Document_TX3506']")));
+                WaitForAjax();
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.PeriodButton277XPath)));
+                Debug.WriteLine("choosen period QRT");
             }
             else
             {
-                Debug.WriteLine("choosen period month");
                 pageElements.ChosePeriodMonthButton277.Click();
-                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(".//*[@class='QvFrame Document_TX3506']")));
+                WaitForAjax();
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.PeriodButton277XPath)));
+                Debug.WriteLine("choosen period month");
             }
 
             var action = new Actions(_firefox);
             pageElements.PeriodButton277.Click();
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//*[@class='QvFrame Document_MB585']/div[3]/div/div[1]/div[5]/div/div[3]")));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(".//*[@class='QvFrame Document_MB585']/div[3]/div/div[1]/div[5]/div/div[3]")));
-            pageElements.DropDownPeriodMenu277.Click();
-            WaitForAjax();
+            /*
+                        wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath(".//*[@id='MainContainer']")));
+                        wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.DropDownMenu277XPath)));*/
+
+            //Не находит дроп даун меню после выбора периода. Пробую функцию waitAndClkick
+            WaitAndClickElement(PageElements.DropDownMenu277XPath);
+            Debug.WriteLine("WaitAndClick works!");
+
+            /*pageElements.DropDownPeriodMenu277.Click();*/
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.DropDownChoosenPeriodXPath)));
+            Debug.WriteLine("DropDownChoosenPeriod is visible");
             action.ContextClick(pageElements.DropDownChoosenPeriod).Perform();
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("html/body/ul/li[1]/a/span")));
             pageElements.SearchOptionContextMenu.Click();
@@ -318,10 +468,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             pageElements.InputFieldChoosenPeriod.SendKeys(period);
             WaitForAjax();
             action.MoveToElement(pageElements.DropDownChoosenPeriod, 5, 5).Click().Perform();
-            
-            wait.Until(
-                ExpectedConditions.ElementToBeClickable(
-                    By.XPath(".//*[@class='QvFrame Document_TX3803']/div[2]/table/tbody/tr/td")));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(PageElements.FilterButton277Xpath)));
         }
 
         public void CheckData()
@@ -329,24 +476,25 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             for (int i = 0; i < marketList.Count; i++)
             {
                 var pageElements = new PageElements(_firefox);
-                WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(20));
+                WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
 
                 /******SELECT BRAND******/
                 pageElements.FilterButton277.Click();
-                WaitForAjax();
-                wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.BrandOption277));
-                pageElements.BrandOption277.Click();
-                WaitForAjax();
-                wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.ClearBrandElement277));
-                pageElements.ClearBrandElement277.Click();
-                WaitForAjax();
-                Thread.Sleep(2000);
-                wait.Until(ExpectedConditions.ElementToBeClickable(pageElements.SearchBrandButton277));
-                pageElements.SearchBrandButton277.Click();
-                WaitForAjax();
-                Thread.Sleep(2000);
+                Debug.WriteLine("Click Filter button");
+
+                WaitAndClickElement(PageElements.BrandOption277Xpath);
+                Debug.WriteLine("Click Brand option");
+
+                WaitAndClickElement(PageElements.ClearBrandElement277XPath);
+                Debug.WriteLine("Clear brand");
+
+                WaitAndClickElement(PageElements.SearchBrandButton277XPath);
+                Debug.WriteLine("Click search brand button");
+
+                wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.InputBrandOrGroupField277XPath)));
                 pageElements.InputBrandField277.SendKeys(brandList[i]);
-                WaitForAjax();
+
+                Thread.Sleep(6000);
 
                 var action = new Actions(_firefox);
                 var selectedBrand277 = pageElements.SelectedBrand277;
@@ -359,25 +507,39 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 {
                     action.MoveToElement(selectedBrand277, 10, 10).Click().Perform();
                 }
-                WaitForAjax();
-                Thread.Sleep(2000);
 
 
                 /******SELECT GROUP******/
-                pageElements.GroupButton277.Click();
-                WaitForAjax();
-                pageElements.ClearGroupElement277.Click();
-                WaitForAjax();
-                pageElements.SearchGroupButton277.Click();
-                WaitForAjax();
+                WaitAndClickElement(PageElements.GroupButton277XPath);
+                Debug.WriteLine("Click Group button");
+
+                WaitAndClickElement(PageElements.ClearGroupElement277XPath);
+                Debug.WriteLine("Click clear button");
+
+                WaitAndClickElement(PageElements.SearchGroupButton277XPath);
+                Debug.WriteLine("Click search group button");
+
+                wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.InputBrandOrGroupField277XPath)));
                 pageElements.InputGroupField277.SendKeys(marketList[i]);
-                WaitForAjax();
+                Debug.WriteLine("Input field - send group name: " + marketList[i]);
 
-                var selectedGroup = pageElements.SelectedGroupElement277;
+                Debug.WriteLine("Title selected group before waiting - " + pageElements.SelectedGroupElement277.GetAttribute("title"));
+                //WaitForTextInTitleAttribute(PageElements.SelectedGroupElement277XPath, marketList[i]);
+                // !!!! ВИСНЕТ !!!! НА ДРУГИХ ТЕКСТАХ МЕТОД ОТРАБАТЫВАЕТ!!!
+                //Debug.WriteLine("Check ContainsIgnoreCase! ");
+
+                Thread.Sleep(8000);
+
+               var selectedGroup = pageElements.SelectedGroupElement277;
                 action.MoveToElement(selectedGroup, 10, 10).Click().Perform();
-                WaitForAjax();
-                Thread.Sleep(6000);
+                Debug.WriteLine("Click selected group");
 
+                WaitForTextInClassAttribute("//*[@class='QvFrame Document_LB2694']", "QvSelected");
+                Debug.WriteLine("Check waitFortextInClassAttribute!!! ");
+
+                WaitForAjax();
+                Thread.Sleep(8000);
+                
                 /******COMPARE***********/
                 var value277 = pageElements.TotalSum277.GetAttribute("title");
                 valueList277.Add(value277);
@@ -407,7 +569,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             var smtpServer = new SmtpClient("post.morion.ua");
             mail.From = new MailAddress("snizhana.nomirovska@proximaresearch.com");
             mail.To.Add("snizhana.nomirovska@proximaresearch.com");
-            mail.To.Add("nataly.tenkova@proximaresearch.com");
+            //mail.To.Add("nataly.tenkova@proximaresearch.com");
             mail.Subject = subject;
             mail.Body = MessageContent(messageContent);
             smtpServer.Send(mail);

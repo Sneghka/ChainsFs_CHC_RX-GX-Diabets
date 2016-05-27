@@ -22,6 +22,27 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
         }
 
         //ELEMENTS FOR LOGIN
+
+        #region PageElementXpath
+
+        public const string ContinueButtonXPath = "//div[@class='QvFrame Document_BU04']/div[2]/button";
+
+        public const string SalesRadioButtonXPath =
+            "//*[@class='QvFrame Document_LB129']/div[3]/div/div[1]/div[1]";
+
+        public const string DropDownChoosenPeriodXPath = ".//*[@class='QvFrame DS']/div/div/div[1]/div[1]";
+        public const string CurrencyToggleXpath = ".//*[@class='QvFrame Document_BU56']/div[3]/button";
+        public const string CheckCurrencyMarketXPath = "//div[@class='QvFrame Document_CH19']/div[2]/div[2]/div";
+
+        public const string ChoosenPeriodXpath =
+            ".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[3]";
+
+        public const string SearchOptionContextMenuXPath = "html/body/ul/li[1]/a/span";
+        public const string InputFieldChoosenPeriodXPath = "html/body/div[2]/input";
+
+        #endregion
+
+
         public IWebElement LoginElement
         {
             get { return _firefox.FindElement(By.Id("username")); }
@@ -53,7 +74,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
         }
         
         public IWebElement ChoosenPeriod {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[3]/div[1]")); }
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[3]")); }
         }
         public IWebElement ChoosenPeriodText
         {
@@ -136,7 +157,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
 
         /**BRAND NAME**/
 
-        private string[] _brandXPaths =
+        public string[] _brandXPaths =
         {
             "",
             ".//*[@class='QvFrame Document_CH19']/div[3]/div[1]/div[1]/div[2]/div/div[3]",
@@ -180,6 +201,34 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
 
         /***LOGIN PAGE277***/
 
+        #region 277PageElementsXPath
+
+        public const string SelectMarketSearchElement277XPath = ".//*[@class='QvFrame Document_LB1207']/div[2]/div[1]/div";
+        public const string TestTotalTabXPath = ".//*[@rel='DocumentSH163']/a";
+        public const string FilterButton277Xpath = ".//*[@class='QvFrame Document_TX3803']/div[2]/table/tbody/tr/td";
+        public const string ChosePeriodWeekButton277XPath =
+            ".//*[@class='QvFrame Document_LB2626']/div[3]/div/div[1]/div[1]/div[1]";
+
+        public const string PeriodButton277XPath = ".//*[@class='QvFrame Document_TX3506']";
+
+        public const string DropDownMenu277XPath =
+            ".//*[@class='QvFrame Document_MB585']/div[3]/div/div[1]/div[5]/div/div[3]";
+
+        public const string BrandOption277Xpath =
+            "//div[@class='QvFrame Document_LB2667']/div[3]/div/div[1]/div[1]";
+
+        public const string ClearGroupElement277XPath = ".//*[@class='QvFrame Document_LB2372']/div[2]/div[1]/div[1]";
+        public const string ClearBrandElement277XPath = "//*[@class='QvFrame Document_LB2694']/div[2]/div[1]/div[2]";
+        public const string InputBrandOrGroupField277XPath = "html/body/div[2]/input";
+
+        public const string SelectedMarketElement277XPath =".//*[@class='QvFrame Document_LB1207']/div[3]/div/div[1]/div[1]";
+        public const string SearchGroupButton277XPath = ".//*[@class='QvFrame Document_LB2372']/div[2]/div[1]/div[2]";
+        public const string SelectedGroupElement277XPath = "//*[@class='QvFrame Document_LB2372']/div[3]/div/div[1]/div[1]";
+        public const string SearchBrandButton277XPath = "//*[@class='QvFrame Document_LB2694']/div[2]/div[1]/div[3]";
+        public const string GroupButton277XPath = ".//*[@class='QvFrame Document_TX3495']/div[2]/table/tbody/tr/td";
+
+        #endregion
+
         public IWebElement SelectMarketSearchElement277
         {
             get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB1207']/div[2]/div[1]/div")); }
@@ -192,7 +241,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
 
         public IWebElement SelectedMarketElement277
         {
-            get{ return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB1207']/div[3]/div/div[1]/div/div[1]"));}
+            get{ return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB1207']/div[3]/div/div[1]/div[1]"));}
         }
          public IWebElement BeginButton277
         {
@@ -248,7 +297,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
          public IWebElement SearchBrandButton277
          {
              get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2694']/div[2]/div[1]/div[3]")); }
-                                                       //div[@class='QvFrame Document_LB2694']/div[2]/div/div[3]
+                                                       
          }
          public IWebElement InputBrandField277
          {
@@ -284,7 +333,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
          public IWebElement SelectedGroupElement277
          {
              get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_LB2372']/div[3]/div/div[1]/div[1]")); }
-         }
+        }                                                
          public IWebElement TotalSum277
          {
              get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_CH1694']/div[3]/div[1]/div[1]/div[5]/div/div[1]")); }

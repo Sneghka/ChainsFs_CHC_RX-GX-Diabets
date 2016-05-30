@@ -40,6 +40,12 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
         public const string SearchOptionContextMenuXPath = "html/body/ul/li[1]/a/span";
         public const string InputFieldChoosenPeriodXPath = "html/body/div[2]/input";
 
+        public const string ChosePeriodWeekButtonXPath =
+            ".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[1]/div[1]";
+
+        public const string DropDownMenuXPath =
+            ".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[1]/div[1]";
+
         #endregion
 
 
@@ -338,10 +344,5 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
          {
              get { return _firefox.FindElement(By.XPath("//*[@class='QvFrame Document_CH1694']/div[3]/div[1]/div[1]/div[5]/div/div[1]")); }
          }
-
-
-
-        /*******CHOSE GROUP*****/
-        //driver.findElement(By.xpath("//div[@class='QvFrame Document_LB2372']/div[3]/div/div[1]/div[1]/div[2]/div[2]/span[1]")) - первый элемент в выпадающем списке групп
     }
 }

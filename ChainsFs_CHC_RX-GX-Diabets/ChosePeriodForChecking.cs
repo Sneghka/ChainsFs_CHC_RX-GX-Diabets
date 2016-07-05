@@ -19,15 +19,18 @@ namespace ChainsFs_CHC_RX_GX_Diabets
 
             var firefox = new FirefoxDriver();
             var methods = new Methods(firefox);
+            var data = "2016 W10";
+            var pageNumber = "336";     //335_RX, 336_GX, 337_Diabets, 333_CHC
+            var pageName = "CHC";
 
-            methods.LoginPage("336"); // INPUT REQUIRED PAGE 333 || 335|| 336||337 
+            methods.LoginPage(pageNumber); // INPUT REQUIRED PAGE 333 || 335|| 336||337 
             methods.SetUpPageFilters();
-            methods.SetUpChoosenPeriod("2015 W37"); // INPUT PERIOD IN FORMAT   2016 03_MAR || 2016 W18 || 2016 Q1
+            methods.SetUpChoosenPeriod(data); // INPUT PERIOD IN FORMAT   2016 03_May || 2016 W18 || 2016 Q1
             methods.StorePageData();
             methods.LoginPage277();
-            methods.SetUpChoosenPeriod277("2015 W37"); // INPUT PERIOD IN FORMAT   2016 03_MAR || 2016 W18 || 2016 Q1
+            methods.SetUpChoosenPeriod277(data); // INPUT PERIOD IN FORMAT   2016 03_May || 2016 W18 || 2016 Q1
             methods.CheckData();
-            methods.email_send("Check data Chainsfs Common Test &" + "..." + ". Period: " + methods.CheckingPeriod); //INPUT FILE NAME
+            methods.email_send("Check data Chainsfs Common Test &" + pageName + ". Period: " + methods.CheckingPeriod); //INPUT FILE NAME
 
             firefox.Quit();
         }

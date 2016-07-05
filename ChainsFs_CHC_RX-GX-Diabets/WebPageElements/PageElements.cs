@@ -41,10 +41,17 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
         public const string InputFieldChoosenPeriodXPath = "html/body/div[2]/input";
 
         public const string ChosePeriodWeekButtonXPath =
-            ".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[1]/div[1]";
-
+            ".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[1]";
+        public const string ChosePeriodMonthkButtonXPath =
+           ".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[2]";
+        public const string ChosePeriodQrtkButtonXPath =
+           ".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[3]";
         public const string DropDownMenuXPath =
             ".//*[@class='QvFrame Document_MB04']/div[2]/div/div[1]/div[5]/div/div[1]/div[1]";
+
+        public const string BeginButtonXPath277 = ".//*[@class='QvFrame Document_BU2056']/div[2]/button";
+         
+        public const string DropDownPeriodMenu277XPath = ".//*[@class='QvFrame Document_MB585']/div[3]/div/div[1]/div[5]/div/div[3]";
 
         #endregion
 
@@ -88,15 +95,15 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
         }
         public IWebElement ChosePeriodWeekButton
         {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[1]/div[1]")); }
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[1]")); }
         }
         public IWebElement ChosePeriodMonthButton
         {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[2]/div[1]")); }
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[2]")); }
         }
         public IWebElement ChosePeriodQrtButton
         {
-            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[3]/div[1]")); }
+            get { return _firefox.FindElement(By.XPath(".//*[@class='QvFrame Document_LB18']/div[3]/div/div[1]/div[3]")); }
         }
 
         public IWebElement DropDownMenu
@@ -213,7 +220,11 @@ namespace ChainsFs_CHC_RX_GX_Diabets.WebPageElements
         public const string TestTotalTabXPath = ".//*[@rel='DocumentSH163']/a";
         public const string FilterButton277Xpath = ".//*[@class='QvFrame Document_TX3803']/div[2]/table/tbody/tr/td";
         public const string ChosePeriodWeekButton277XPath =
-            ".//*[@class='QvFrame Document_LB2626']/div[3]/div/div[1]/div[1]/div[1]";
+            ".//*[@class='QvFrame Document_LB2626']/div[3]/div/div[1]/div[1]";
+        public const string ChosePeriodMonthButton277XPath =
+            ".//*[@class='QvFrame Document_LB2626']/div[3]/div/div[1]/div[2]";
+        public const string ChosePeriodQRTButton277XPath =
+           ".//*[@class='QvFrame Document_LB2626']/div[3]/div/div[1]/div[3]";
 
         public const string PeriodButton277XPath = ".//*[@class='QvFrame Document_TX3506']";
 

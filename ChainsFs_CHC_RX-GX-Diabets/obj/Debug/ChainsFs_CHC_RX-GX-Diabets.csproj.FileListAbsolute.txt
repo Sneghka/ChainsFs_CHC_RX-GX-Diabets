@@ -29,4 +29,3 @@ D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsF
 D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\bin\Debug\WebDriver.Support.xml
 D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.dll
 D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.pdb
-D:\Sneghka\Selenium\Projects\Every_Week_Tests\ChainsFs_CHC_RX-GX-Diabets\ChainsFs_CHC_RX-GX-Diabets\obj\Debug\ChainsFs_CHC_RX-GX-Diabets.csprojResolveAssemblyReference.cache

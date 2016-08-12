@@ -76,16 +76,10 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                         ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath(waitPresenceAllElementsByXPath)));
                     return;
                 }
-                catch (NoSuchElementException)
+                catch (Exception)
                 {
-                    Debug.WriteLine("Load page 277. Attempt №" + i);
+                   Console.WriteLine("Load page 277. Attempt №" + i);
                     i++;
-                }
-                catch (TimeoutException)
-                {
-                    Debug.WriteLine("Load page 277. Attempt №" + i);
-                    i++;
-
                 }
 
             }
@@ -94,6 +88,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
 
         public void TryToClickWithoutException(string locator, IWebElement element)
         {
+            //Console.WriteLine("In tryToClick method + xpath: " + locator);
             var maxElementRetries = 100;
             var action = new Actions(_firefox);
             var retries = 0;
@@ -110,7 +105,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                     WaitForAjax();
                     return;
                 }
-                catch (StaleElementReferenceException e)
+                catch (Exception e)
                 {
                     if (retries < maxElementRetries)
                     {
@@ -122,28 +117,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                         throw e;
                     }
                 }
-                catch (NoSuchElementException a)
-                {
-                    if (retries < maxElementRetries)
-                    {
-                        retries++;
-                    }
-                    else
-                    {
-                        throw a;
-                    }
-                }
-                catch (Exception c)
-                {
-                    if (retries < maxElementRetries)
-                    {
-                        retries++;
-                    }
-                    else
-                    {
-                        throw c;
-                    }
-                }
+               
             }
 
 
@@ -331,9 +305,6 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             }
         }
 
-
-
-
         public string MessageContent(List<string> list)
         {
             var sb = new StringBuilder();
@@ -390,16 +361,18 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             Debug.WriteLine("Set up filters -  success");
             WaitForAjax();
             var pageElements = new PageElements(_firefox);
-            pageElements.ChosePeriodMonthButton.Click();
+            TryToClickWithoutException(PageElements.ChosePeriodMonthkButtonXPath, pageElements.ChosePeriodMonthButton);
             WaitForAjax();
+            WaitForTextInClassAttribute(PageElements.ChosePeriodMonthkButtonXPath, "QvSelected");
 
         }
         public void SetUpQuarterPeriod()
         {
             Debug.WriteLine("Set up filters -  success");
-            WaitForAjax();
             var pageElements = new PageElements(_firefox);
-            pageElements.ChosePeriodQrtButton277.Click();
+            WaitForAjax();
+            pageElements.ChosePeriodQrtButton.Click();
+            WaitForTextInClassAttribute(PageElements.ChosePeriodQrtkButtonXPath, "QvSelected");
             WaitForAjax();
 
         }
@@ -539,24 +512,26 @@ namespace ChainsFs_CHC_RX_GX_Diabets
         public void SetUpFilterForWeekPage277()
         {
             var pageElements = new PageElements(_firefox);
-            pageElements.ChosePeriodWeekButton277.Click();
+            TryToClickWithoutException(PageElements.ChosePeriodWeekButton277XPath, pageElements.ChosePeriodWeekButton277);
             WaitForAjax();
-            Thread.Sleep(4000);
-            Debug.WriteLine("Choosen period - week");
+            WaitForTextInClassAttribute(PageElements.ChosePeriodWeekButton277XPath, "QvSelected");
+            Debug.WriteLine("choosen period week");
         }
         public void SetUpFilterForMonthPage277()
         {
             var pageElements = new PageElements(_firefox);
-            pageElements.ChosePeriodMonthButton277.Click();
+            TryToClickWithoutException(PageElements.ChosePeriodMonthButton277XPath, pageElements.ChosePeriodMonthButton277);
             WaitForAjax();
-            Debug.WriteLine("Choosen period - month");
+            WaitForTextInClassAttribute(PageElements.ChosePeriodMonthButton277XPath, "QvSelected");
+            Debug.WriteLine("choosen period month");
         }
         public void SetUpFilterForQrtPage277()
         {
             var pageElements = new PageElements(_firefox);
-            pageElements.ChosePeriodQrtButton277.Click();
+            TryToClickWithoutException(PageElements.ChosePeriodQRTButton277XPath, pageElements.ChosePeriodQrtButton277);
             WaitForAjax();
-            Debug.WriteLine("Choosen period - Qrt");
+            WaitForTextInClassAttribute(PageElements.ChosePeriodQRTButton277XPath, "QvSelected");
+            Debug.WriteLine("choosen period QRT");
         }
         public void SetUpChoosenPeriod277(string period)
         {
@@ -620,6 +595,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 TryToClickWithoutException(PageElements.SearchBrandButton277XPath, pageElements.SearchBrandButton277);
                 wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.InputBrandOrGroupField277XPath)));
                 pageElements.InputBrandField277.SendKeys(brandList[i]);
+                WaitForAjax();
                 Thread.Sleep(500);
                 var action = new Actions(_firefox);
                 var selectedBrandName = pageElements.SelectedBrandName277.GetAttribute("title");
@@ -643,14 +619,15 @@ namespace ChainsFs_CHC_RX_GX_Diabets
                 TryToClickWithoutException(PageElements.SearchGroupButton277XPath, pageElements.SearchGroupButton277);
                 wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(PageElements.InputBrandOrGroupField277XPath)));
                 pageElements.InputGroupField277.SendKeys(marketList[i]);
-                Thread.Sleep(1000); // возможно лучше поставить ожидание 
+                WaitForAjax();
+                Thread.Sleep(3000); // возможно лучше поставить ожидание 
 
                 //*************************
 
                 TryToClickWithoutException(PageElements.SelectedGroupElement277XPath, pageElements.SelectedGroupElement277);
-                // action.MoveToElement(pageElements.SelectedGroupElement277, 10, 10).Click().Perform();
                 WaitForAjax();
                 WaitForTextInClassAttributeTwoPossiblePatterns(PageElements.SelectedGroupElement277XPath, "QvSelected", "QvExcluded");
+                Thread.Sleep(4000);
                
                 /******COMPARE***********/
                 var value277 = pageElements.TotalSum277.GetAttribute("title");

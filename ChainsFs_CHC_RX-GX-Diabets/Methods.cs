@@ -67,7 +67,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
         public void TryToLoadPage(string url, string waitPresenceAllElementsByXPath)
         {
             WebDriverWait wait = new WebDriverWait(_firefox, TimeSpan.FromSeconds(120));
-            for (int i = 0; i < 5; i++)
+            for (int i = 1; i < 6; i++)
             {
                 try
                 {

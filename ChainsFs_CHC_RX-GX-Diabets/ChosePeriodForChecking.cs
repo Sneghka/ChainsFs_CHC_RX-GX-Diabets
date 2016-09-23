@@ -19,7 +19,7 @@ namespace ChainsFs_CHC_RX_GX_Diabets
 
             var firefox = new FirefoxDriver();
             var methods = new Methods(firefox);
-            var data = "2016 W28";
+            var data = "2016 W37";
             var pageNumber = "337";     //335_RX, 336_GX, 337_Diabets, 333_CHC
             var pageName = "Diabets";
 

@@ -658,7 +658,8 @@ namespace ChainsFs_CHC_RX_GX_Diabets
             var smtpServer = new SmtpClient("post.morion.ua");
             mail.From = new MailAddress("snizhana.nomirovska@proximaresearch.com");
             mail.To.Add("snizhana.nomirovska@proximaresearch.com");
-            mail.To.Add("nataly.tenkova@proximaresearch.com");
+           /* mail.To.Add("natalia.ogullo@proximaresearch.com");
+            mail.To.Add("julia.zakharova@proximaresearch.com");*/
             mail.Subject = subject;
             mail.Body = MessageContent(messageContent);
             smtpServer.Send(mail);
